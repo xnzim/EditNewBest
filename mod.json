@@ -6,9 +6,9 @@
 		"mac": "2.2074",
 		"ios": "2.2074"
 	},
-	"id": "snix.movenewbest",
+	"id": "snix.editnewbest",
 	"name": "Edit New Best!",
-	"version": "v1.0.5",
+	"version": "v1.0.6",
 	"developer": "Snix",
 	"description": " Move, scale, hide or change the duration of the 'New Best!' popup as you like!",
 	"tags": [

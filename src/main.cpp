@@ -70,18 +70,12 @@ class $modify(MyPlayLayer, PlayLayer) {
                 double scale = Mod::get()->getSettingValue<double>("popup-scale");
                 newBestContainer->setScale(static_cast<float>(scale));
 
-                std::string positionSetting = Mod::get()->getSettingValue<std::string>("popup-position");
                 auto winSize = CCDirector::sharedDirector()->getWinSize();
-
-                // --- POSITIONING FIX: Add a margin to prevent clipping ---
-                // This value pulls the popup away from the screen edge. You can adjust it.
                 float margin = 40.0f;
 
-                // --- NEW LOGIC: Check the boolean toggle first ---
                 bool useCustomPos = Mod::get()->getSettingValue<bool>("use-custom-position");
 
                 if (useCustomPos) {
-                    // If the checkbox is ticked, use the custom X and Y values
                     double customX = Mod::get()->getSettingValue<double>("custom-x-position");
                     double customY = Mod::get()->getSettingValue<double>("custom-y-position");
                     newBestContainer->setPosition(ccp(
@@ -90,51 +84,46 @@ class $modify(MyPlayLayer, PlayLayer) {
                     ));
                 }
                 else {
-                    // If the checkbox is not ticked, use the preset dropdown
                     std::string positionSetting = Mod::get()->getSettingValue<std::string>("popup-position");
 
                     if (positionSetting == "Top Left") {
                         newBestContainer->setPosition(ccp(margin, winSize.height - margin));
-                        newBestContainer->setAnchorPoint(ccp(0, 1)); // Anchor by top-left corner
+                        newBestContainer->setAnchorPoint(ccp(0, 1));
                     }
                     else if (positionSetting == "Top Middle") {
                         newBestContainer->setPosition(ccp(winSize.width / 2, winSize.height - margin));
-                        newBestContainer->setAnchorPoint(ccp(0.5, 1)); // Anchor by top-center edge
+                        newBestContainer->setAnchorPoint(ccp(0.5, 1));
                     }
                     else if (positionSetting == "Top Right") {
                         newBestContainer->setPosition(ccp(winSize.width - margin, winSize.height - margin));
-                        newBestContainer->setAnchorPoint(ccp(1, 1)); // Anchor by top-right corner
+                        newBestContainer->setAnchorPoint(ccp(1, 1));
                     }
                     else if (positionSetting == "Bottom Left") {
                         newBestContainer->setPosition(ccp(margin, margin));
-                        newBestContainer->setAnchorPoint(ccp(0, 0)); // Anchor by bottom-left corner
+                        newBestContainer->setAnchorPoint(ccp(0, 0));
                     }
                     else if (positionSetting == "Bottom Middle") {
                         newBestContainer->setPosition(ccp(winSize.width / 2, margin));
-                        newBestContainer->setAnchorPoint(ccp(0.5, 0)); // Anchor by bottom-center edge
+                        newBestContainer->setAnchorPoint(ccp(0.5, 0));
                     }
                     else if (positionSetting == "Bottom Right") {
                         newBestContainer->setPosition(ccp(winSize.width - margin, margin));
-                        newBestContainer->setAnchorPoint(ccp(1, 0)); // Anchor by bottom-right corner
-                        // If positionSetting is "Default", we do nothing and let the game handle it.
+                        newBestContainer->setAnchorPoint(ccp(1, 0));
                     }
                 }
 
-
-
+                // This is the original, correct sequence that preserves the game's intended delay.
                 float duration = static_cast<float>(Mod::get()->getSettingValue<double>("popup-duration"));
 
-                // Create a sequence: Delay -> Fade Out -> Remove itself
                 auto sequence = CCSequence::create(
-                    CCDelayTime::create(duration),      // Wait for the duration from settings
+                    CCDelayTime::create(duration),
                     CCScaleTo::create(0.15f, 0.0f),
-                    CCRemoveSelf::create(),             // Remove the node from the scene
+                    CCRemoveSelf::create(),
                     nullptr
                 );
 
-                // Run the full animation sequence on the popup
                 newBestContainer->runAction(sequence);
-            });
+                });
         }
     }
 };
