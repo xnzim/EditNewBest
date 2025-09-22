@@ -1,0 +1,91 @@
+{
+	"geode": "4.8.0",
+	"gd": {
+		"win": "2.2074",
+		"android": "2.2074",
+		"mac": "2.2074",
+		"ios": "2.2074"
+	},
+	"id": "snix.movenewbest",
+	"name": "Edit New Best!",
+	"version": "v1.0.5",
+	"developer": "Snix",
+	"description": " Move, scale, hide or change the duration of the 'New Best!' popup as you like!",
+	"tags": [
+		"customization",
+		"interface",
+		"utility",
+		"gameplay"
+	],
+	"dependencies": {
+		"geode.node-ids": ">=v1.20.0"
+	},
+	"settings": {
+		"popup-position": {
+			"name": "Popup Position",
+			"description": "Select the position of the 'NEW BEST!' popup.",
+			"type": "string",
+			"default": "Default",
+			"one-of": [
+				"Default",
+				"Top Left",
+				"Top Middle",
+				"Top Right",
+				"Bottom Left",
+				"Bottom Middle",
+				"Bottom Right"
+			],
+			"enable-if": "!use-custom-position"
+		},
+		"hide-popup": {
+			"name": "Hide Popup",
+			"description": "Completely hide the 'NEW BEST!' popup.",
+			"type": "bool",
+			"default": false
+		},
+		"popup-scale": {
+			"name": "Popup Scale",
+			"description": "Adjust the size of the 'NEW BEST!' popup.",
+			"type": "float",
+			"default": 1.0,
+			"min": 0.1,
+			"max": 2.0,
+			"slider": true
+		},
+		"popup-duration": {
+			"name": "Popup Duration",
+			"description": "How long the 'NEW BEST!' popup stays on screen before disappearing.",
+			"type": "float",
+			"default": 1.5,
+			"min": 0.1,
+			"max": 10.0,
+			"slider": true
+		},
+		"custom-position-title": {
+			"type": "title",
+			"name": "Custom Positions",
+			"description": "Coordinates are screen pixels measured from the bottom-left corner."
+		},
+		"use-custom-position": {
+			"name": "Use Custom Position",
+			"description": "Check this to override the preset and use custom X/Y coordinates.",
+			"type": "bool",
+			"default": false
+		},
+		"custom-x-position": {
+			"name": "Custom X Position",
+			"description": "Set the custom X coordinate.",
+			"type": "float",
+			"default": 0.0,
+			"enable-if": "use-custom-position"
+		},
+		"custom-y-position": {
+			"name": "Custom Y Position",
+			"description": "Set the custom Y coordinate.",
+			"type": "float",
+			"default": 0.0,
+			"enable-if": "use-custom-position"
+		}
+
+	}
+}
