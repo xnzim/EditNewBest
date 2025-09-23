@@ -1,16 +1,13 @@
 name: Build Geode Mod
 
 on:
-  # This keeps the manual run button
   workflow_dispatch:
-
-  # This is the section we are fixing
   push:
     branches:
-      - "master"  # It's better practice to specify 'master' or 'main' instead of '**'
+      - "master"
     tags:
-      - "v*.*.*"  # This runs the action on tags like v1.0.6
-      - "v*.*"    # This runs the action on tags like v1.0
+      - "v*.*.*"
+      - "v*.*"
 
 jobs:
   build:
@@ -45,24 +42,28 @@ jobs:
       - name: Build the mod
         uses: geode-sdk/build-geode-mod@main
         with:
+          # This is correct. It builds each platform separately.
           combine: true
           target: ${{ matrix.config.target }}
 
   package:
     name: Package Builds
     runs-on: ubuntu-latest
-    needs: build
+    needs: ['build']
 
     steps:
-      - name: Download Artifacts
-        uses: actions/download-artifact@v4
-        with:
-          # THIS IS THE FIX:
-          name: Geode Build Results
-          path: ./dist
-      
+      # THIS IS THE CRUCIAL STEP WE WERE MISSING.
+      # This action automatically downloads all the separate build artifacts
+      # and combines their .geode files into one directory.
+      - name: Combine Builds
+        uses: geode-sdk/build-geode-mod/combine@main
+        id: package
+
+      # This is the uploader. It takes the output from the "Combine Builds" step
+      # and uploads it to the release page.
       - name: Upload to Release
         uses: softprops/action-gh-release@v2
         with:
-          files: ./dist/*.geode
+          # This correctly points to the output directory from the 'package' step
+          files: ${{ steps.package.outputs.build-output }}/*.geode
           fail_on_unmatched_files: true
