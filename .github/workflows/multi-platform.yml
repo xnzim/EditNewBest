@@ -49,15 +49,21 @@ jobs:
           target: ${{ matrix.config.target }}
 
   package:
-    name: Package builds
+    name: Package Builds
     runs-on: ubuntu-latest
-    needs: ['build']
+    needs: build
 
     steps:
-      - uses: geode-sdk/build-geode-mod/combine@main
-        id: build
-
-      - uses: actions/upload-artifact@v4
+      - name: Download Artifacts
+        uses: actions/download-artifact@v4
         with:
+          # This name is automatically set by the build action
           name: Build Output
-          path: ${{ steps.build.outputs.build-output }}
+          path: ./dist
+      
+      - name: Upload to Release
+        uses: softprops/action-gh-release@v2
+        with:
+          # This uploads all .geode files from the path we downloaded to
+          files: ./dist/*.geode
+          fail_on_unmatched_files: true
