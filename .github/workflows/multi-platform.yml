@@ -1,10 +1,16 @@
 name: Build Geode Mod
 
 on:
+  # This keeps the manual run button
   workflow_dispatch:
+
+  # This is the section we are fixing
   push:
     branches:
-      - "**"
+      - "master"  # It's better practice to specify 'master' or 'main' instead of '**'
+    tags:
+      - "v*.*.*"  # This runs the action on tags like v1.0.6
+      - "v*.*"    # This runs the action on tags like v1.0
 
 jobs:
   build:
