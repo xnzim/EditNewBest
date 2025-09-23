@@ -57,13 +57,12 @@ jobs:
       - name: Download Artifacts
         uses: actions/download-artifact@v4
         with:
-          # This name is automatically set by the build action
-          name: Build Output
+          # THIS IS THE FIX:
+          name: Geode Build Results
           path: ./dist
       
       - name: Upload to Release
         uses: softprops/action-gh-release@v2
         with:
-          # This uploads all .geode files from the path we downloaded to
           files: ./dist/*.geode
           fail_on_unmatched_files: true
