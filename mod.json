@@ -17,9 +17,6 @@
 		"utility",
 		"gameplay"
 	],
-	"dependencies": {
-		"geode.node-ids": ">=v1.20.0"
-	},
 	"settings": {
 		"popup-position": {
 			"name": "Popup Position",

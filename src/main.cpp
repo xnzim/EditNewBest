@@ -43,7 +43,8 @@ class $modify(MyPlayLayer, PlayLayer) {
                 bool foundLabel = false;
                 CCObject* childObj;
                 CCARRAY_FOREACH(potentialContainer->getChildren(), childObj) {
-                    if (dynamic_cast<CCLabelBMFont*>(childObj)) {
+                    // rip dynamic cast, hello typeinfo cast
+                    if (typeinfo_cast<CCLabelBMFont*>(childObj)) {
                         foundLabel = true;
                         break;
                     }
