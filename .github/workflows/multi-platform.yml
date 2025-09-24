@@ -9,8 +9,7 @@ on:
       - "v*.*.*"
       - "v*.*"
 
-# THIS IS THE FIX:
-# This grants the workflow permission to write to your releases.
+
 permissions:
   contents: write
 
