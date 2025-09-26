@@ -8,9 +8,13 @@
 	},
 	"id": "snix.editnewbest",
 	"name": "Edit New Best!",
-	"version": "v1.0.7",
+	"version": "v1.0.8",
 	"developer": "Snix",
 	"description": " Move, scale, hide or change the duration of the 'New Best!' popup as you like!",
+	"links": {
+		"source": "https://github.com/xnzim/EditNewBest",
+		"community": "https://discord.gg/389pKvby2t"
+	},
 	"tags": [
 		"customization",
 		"interface",
